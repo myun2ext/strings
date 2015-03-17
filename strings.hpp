@@ -22,7 +22,6 @@ namespace myun2
 		private:
 			FILE* fp;
 
-			long allocated;
 			long file_size() {
 				fseek(fp, 0, SEEK_END);
 				return ftell(fp);
@@ -37,16 +36,16 @@ namespace myun2
 				if ( access(filename, 0) ) {
 					fp = fopen(filename, "w+b");
 					if ( fp == NULL ) throw open_failed();
-					allocated = 0;
 				}
 				else
 				{
 					fp = fopen(filename, "r+b");
 					if ( fp == NULL ) throw open_failed();
-					allocated = file_size();
+					fseek(fp, 0, SEEK_END);
 				}
 			}
 			void close() { if(fp) fclose(fp); }
+
 		};
 	}
 }
