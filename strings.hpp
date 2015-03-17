@@ -2,6 +2,7 @@
 #define __MYUN2__STRINGS__HPP__
 
 #include <stdio.h>
+#include <string.h>
 #include <string>
 
 #ifdef WIN32
