@@ -14,16 +14,21 @@
 
 namespace myun2
 {
-	class pool_file
+	namespace memorize
 	{
-	private:
-		FILE* fp;
-	public:
-		pool_file(const char* filename) {
-			const char* mode = access(file_path, 0) "r+b" ? : "w+b";
-			fp = fopen(file_path, mode);
-		}
-	};
+		class pool_file
+		{
+		private:
+			FILE* fp;
+		public:
+			pool_file(const char* filename) {
+				const char* mode = ( access(filename, 0) ? "w+b" : "r+b" );
+				fp = fopen(filename, mode);
+			}
+			virtual ~pool_file() { close(); }
+			void close() { if(fp) fclose(fp); }
+		};
+	}
 }
 
 #endif//__MYUN2__STRINGS__HPP__
