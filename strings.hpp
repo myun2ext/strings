@@ -16,16 +16,36 @@ namespace myun2
 {
 	namespace memorize
 	{
+		template <unsigned int _blockSize = 64>
 		class pool_file
 		{
 		private:
 			FILE* fp;
-		public:
-			pool_file(const char* filename) {
-				const char* mode = ( access(filename, 0) ? "w+b" : "r+b" );
-				fp = fopen(filename, mode);
+
+			long allocated;
+			long file_size() {
+				fseek(fp, 0, SEEK_END);
+				return ftell(fp);
 			}
+		public:
+			class open_failed {};
+
+			pool_file(const char* filename) { fp = NULL; open(filename); }
 			virtual ~pool_file() { close(); }
+
+			bool open(const char* filename) {
+				if ( access(filename, 0) ) {
+					fp = fopen(filename, "w+b");
+					if ( fp == NULL ) throw open_failed();
+					allocated = 0;
+				}
+				else
+				{
+					fp = fopen(filename, "r+b");
+					if ( fp == NULL ) throw open_failed();
+					allocated = file_size();
+				}
+			}
 			void close() { if(fp) fclose(fp); }
 		};
 	}

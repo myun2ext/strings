@@ -3,6 +3,6 @@
 using namespace myun2::memorize;
 
 int main() {
-	pool_file f("example.db");
+	pool_file<42> f("example.db");
 	return 0;
 }
