@@ -2,6 +2,7 @@
 #define __MYUN2__STRINGS__HPP__
 
 #include <stdio.h>
+#include <string>
 
 #ifdef WIN32
 	#include <io.h>
@@ -22,7 +23,7 @@ namespace myun2
 		private:
 			FILE* fp;
 
-			long file_size() {
+			long cur() {
 				fseek(fp, 0, SEEK_END);
 				return ftell(fp);
 			}
@@ -45,7 +46,17 @@ namespace myun2
 				}
 			}
 			void close() { if(fp) fclose(fp); }
-
+			long write(const char* s) {
+				long pos = cur();
+				fwrite(s, strlen(s), 1, fp);
+				return pos;
+			}
+			::std::string read(long pos, size_t length) {
+				fseek(fp, pos, SEEK_SET);
+				::std::string s(length, '\0');
+				fread((char*)s.data(), length, 1, fp);
+				return s;
+			}
 		};
 	}
 }
