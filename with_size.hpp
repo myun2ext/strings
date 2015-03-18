@@ -31,6 +31,7 @@ namespace myun2
 
 		struct short_string : public with_size<char, 1>
 		{
+			typedef ::std::string type;
 			::std::string str;
 			short_string(const char* s) : str(s) {}
 

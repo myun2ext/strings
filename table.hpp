@@ -30,19 +30,23 @@ namespace myun2
 				T operator [](unsigned int x){}
 			};
 
-			/*
-			long write(Pool &pool)
+			template <typename _DataType>
+			struct data
 			{
-				long pos = pool.write(&size, _SizeBytes);
-				pool.write(buffer, size);
-				return pos;
-			}
-			void read(Pool &pool, long pos)
-			{
-				pool.read(pos, &size, _SizeBytes);
-				pool.read(pos + _SizeBytes, buffer, size);
-			}
-			*/
+				typedef typename _DataType::type type, data_type;
+				DataPool &data_pool;
+				long address;
+				_DataType _data;
+				data(DataPool &pool, long addr) : data_pool(pool), address(addr) {}
+
+				operator data_type() { return _data.read(data_pool, address); }
+				template <typename _InDataType>
+				data_type operator = (const _InDataType& in_data) {
+					_data = _DataType(in_data);
+					address = _data.write(data_pool);
+					return _data;
+				}
+			};
 
 			record operator [](unsigned int y){ return record(y, index_pool, data_pool); }
 		};
