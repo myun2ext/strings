@@ -64,6 +64,10 @@ namespace myun2
 				fseek(fp, pos, SEEK_SET);
 				return fread(buffer, length, 1, fp);
 			}
+			size_t write(long pos, const void* buffer, size_t length) {
+				fseek(fp, pos, SEEK_SET);
+				return write(buffer, length);
+			}
 		};
 	}
 }
