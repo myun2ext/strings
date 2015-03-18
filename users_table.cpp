@@ -1,6 +1,7 @@
 #include "table.hpp"
 #include "types.hpp"
 #include <string>
+#include <stdio.h>
 
 using namespace myun2::memorize;
 
@@ -34,5 +35,10 @@ int main()
 {
 	users_table users;
 	users.add(user("hoge", "hogehoge"));
+	printf("%d, %s, %s, %d\n",
+			users[0][0],
+			users[0][1],
+			users[0][2],
+			users[0][3]);
 	return 0;
 }
