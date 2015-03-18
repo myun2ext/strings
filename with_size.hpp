@@ -33,6 +33,7 @@ namespace myun2
 		{
 			typedef ::std::string type;
 			::std::string str;
+			short_string() {}
 			short_string(const char* s) : str(s) {}
 
 			template <typename Pool>

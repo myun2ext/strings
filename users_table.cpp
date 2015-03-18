@@ -1,5 +1,5 @@
 #include "table.hpp"
-#include "with_size.hpp"
+#include "types.hpp"
 #include <string>
 
 using namespace myun2::memorize;
@@ -13,10 +13,10 @@ public:
 
 	struct user
 	{
-		unsigned int id;
+		unsigned_int id;
 		short_string name;
 		short_string screen_name;
-		unsigned int flags;
+		unsigned_int flags;
 		user(const char* _name, const char* _screen_name) {
 			id = 0;
 			name = _name;
