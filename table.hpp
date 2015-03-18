@@ -1,6 +1,9 @@
 #ifndef __MYUN2__MEMORIZE__TABLE__HPP__
 #define __MYUN2__MEMORIZE__TABLE__HPP__
 
+#include "strings.hpp"
+#include <string>
+
 namespace myun2
 {
 	namespace memorize
@@ -40,6 +43,18 @@ namespace myun2
 			}
 
 			record operator [](unsigned int y){ return record(y, index_pool, data_pool); }
+		};
+
+		template <unsigned int _Columns>
+		class file_pool_table : public table<_Columns, file_pool, file_pool>
+		{
+		private:
+			file_pool index_pool;
+			file_pool data_pool;
+		public:
+			file_pool_table(const char* prefix) :
+				index_pool(::std::string(prefix) + ".table.db"),
+				data_pool(::std::string(prefix) + ".data.db") {}
 		};
 	}
 }
