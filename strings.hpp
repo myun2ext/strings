@@ -33,6 +33,7 @@ namespace myun2
 			class open_failed {};
 
 			pool_file(const char* filename) { fp = NULL; open(filename); }
+			pool_file(const ::std::string &filename) { fp = NULL; open(filename.c_str()); }
 			virtual ~pool_file() { close(); }
 
 			void open(const char* filename) {

@@ -28,8 +28,9 @@ namespace myun2
 
 				template <typename T>
 				T operator [](unsigned int x){}
-			}
+			};
 
+			/*
 			long write(Pool &pool)
 			{
 				long pos = pool.write(&size, _SizeBytes);
@@ -41,20 +42,23 @@ namespace myun2
 				pool.read(pos, &size, _SizeBytes);
 				pool.read(pos + _SizeBytes, buffer, size);
 			}
+			*/
 
 			record operator [](unsigned int y){ return record(y, index_pool, data_pool); }
 		};
 
 		template <unsigned int _Columns>
-		class file_pool_table : public table<_Columns, file_pool, file_pool>
+		class file_pool_table : public table<_Columns, pool_file<1>, pool_file<1> >
 		{
 		private:
-			file_pool index_pool;
-			file_pool data_pool;
+			pool_file<1> index_pool;
+			pool_file<1> data_pool;
+			typedef table<_Columns, pool_file<1>, pool_file<1> > _Base;
 		public:
 			file_pool_table(const char* prefix) :
 				index_pool(::std::string(prefix) + ".table.db"),
-				data_pool(::std::string(prefix) + ".data.db") {}
+				data_pool(::std::string(prefix) + ".data.db"),
+				_Base(index_pool, data_pool) {}
 		};
 	}
 }
