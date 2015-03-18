@@ -38,11 +38,12 @@ namespace myun2
 				DataPool &data_pool;
 				long address;
 				_DataType _data;
+				data(DataPool &pool) : data_pool(pool), address(0) {}
 				data(DataPool &pool, long addr) : data_pool(pool), address(addr) {}
 
 				operator data_type() { return _data.read(data_pool, address); }
 				template <typename _InDataType>
-				data_type operator = (const _InDataType& in_data) {
+				_DataType operator = (const _InDataType& in_data) {
 					_data = _DataType(in_data);
 					address = _data.write(data_pool);
 					return _data;
@@ -52,11 +53,20 @@ namespace myun2
 			template <typename T1, typename T2, typename T3, typename T4>
 			void insert(const T1& v1, const T2& v2, const T3 &v3, const T4& v4)
 			{
+				data<T1> data1(data_pool);
+				data<T2> data2(data_pool);
+				data<T3> data3(data_pool);
+				data<T4> data4(data_pool);
+				data1 = v1;
+				data2 = v2;
+				data3 = v3;
+				data4 = v4;
+
 				typename record::index_array_type array;
-				data<T1> data1 = v1;
-				data<T2> data2 = v2;
-				data<T3> data3 = v3;
-				data<T4> data4 = v4;
+				array[0] = data1.address;
+				array[1] = data1.address;
+				array[2] = data1.address;
+				array[3] = data1.address;
 				index_pool.write(&array, sizeof(array));
 			}
 
