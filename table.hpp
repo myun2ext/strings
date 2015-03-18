@@ -8,7 +8,7 @@ namespace myun2
 {
 	namespace memorize
 	{
-		template <unsigned int _Columns, typename IndexPool, typename DataPool>
+		template <unsigned int _Columns, typename IndexPool, typename DataPool, typename _EntryType=unsigned int>
 		struct table
 		{
 			IndexPool &index_pool;
@@ -19,6 +19,7 @@ namespace myun2
 
 			struct record
 			{
+				typedef _EntryType index_array_type[_Columns];
 				IndexPool &index_pool;
 				DataPool &data_pool;
 				unsigned int recno;
@@ -47,6 +48,17 @@ namespace myun2
 					return _data;
 				}
 			};
+
+			template <typename T1, typename T2, typename T3, typename T4>
+			void insert(const T1& v1, const T2& v2, const T3 &v3, const T4& v4)
+			{
+				typename record::index_array_type array;
+				data<T1> data1 = v1;
+				data<T2> data2 = v2;
+				data<T3> data3 = v3;
+				data<T4> data4 = v4;
+				index_pool.write(&array, sizeof(array));
+			}
 
 			record operator [](unsigned int y){ return record(y, index_pool, data_pool); }
 		};
