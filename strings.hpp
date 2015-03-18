@@ -10,6 +10,7 @@
 	#pragma warning (disable:4996)
 	#define access _access
 #else
+	#include <unistd.h>
 	#include <sys/types.h>
 	#include <sys/stat.h>
 #endif
@@ -34,7 +35,7 @@ namespace myun2
 			pool_file(const char* filename) { fp = NULL; open(filename); }
 			virtual ~pool_file() { close(); }
 
-			bool open(const char* filename) {
+			void open(const char* filename) {
 				if ( access(filename, 0) ) {
 					fp = fopen(filename, "w+b");
 					if ( fp == NULL ) throw open_failed();
